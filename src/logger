@@ -1,0 +1,64 @@
+interface ILoggerConfig {
+  prefix?: string;
+  prefixColor?: TextColor.White;
+  displayConsole?: boolean;
+  outputExternal?: boolean;
+}
+
+type LogFn = (msg: string) => void;
+
+interface ILog {
+  config: ILoggerConfig;
+  log: (msg: string, logColor: TextColor, override?: ILoggerConfig) => void;
+  info: LogFn;
+  warn: LogFn;
+  error: LogFn;
+}
+enum TextColor {
+  Green,
+  White,
+  Yellow,
+  Red
+}
+class Logger implements ILog {
+  private config: ILoggerConfig = {
+    prefix: "console :: ",
+    prefixColor: TextColor.Green,
+    displayConsole: false,
+    outputExternal: false
+  };
+
+  constructor(userConfig: ILoggerConfig = {}) {
+    this.config = { ...this.config, ...userConfig };
+  }
+
+  log(msg: string, logColor: TextColor, override?: ILoggerConfig) {
+    const config = override ? { ...this.config, ...override } : this.config;
+    const { displayConsole, outputExternal, prefix, prefixColor } = config;
+
+    if (displayConsole) {
+      showConsole();
+    }
+
+    if (outputExternal) {
+      // external.printToConsole(`${prefix} ${msg}`);
+    }
+
+    print(prefixColor + prefix + logColor + " " + msg);
+  }
+
+  info(msg: string) {
+    this.log(msg, TextColor.White);
+  }
+
+  warn(msg: string) {
+    this.log(msg, TextColor.Yellow, { displayConsole: true });
+  }
+
+  error(msg: string) {
+    this.log(msg, TextColor.Red, {
+      displayConsole: true,
+      outputExternal: true
+    });
+  }
+}

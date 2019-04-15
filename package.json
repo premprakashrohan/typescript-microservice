@@ -1,0 +1,26 @@
+{
+  "name": "typescript-microservices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build-ts": "tsc",
+    "start": "npm run serve",
+    "serve": "node dist/app.js",
+    "watch-node": "nodemon dist/app.js",
+    "watch-ts": "tsc -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.16.1",
+    "@types/node": "^10.12.2",
+    "express": "^4.16.4",
+    "ts-node": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.3"
+  }
+}
